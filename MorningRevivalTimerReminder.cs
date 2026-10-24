@@ -18,15 +18,13 @@ public class MorningRevivalTimerReminder(
         var today = GetTaiwanToday();
         var rows = await scheduleReader.GetRowsAsync(cancellationToken);
 
-        // 找出今天起 7 天內的主日（週一執行時就是本週日；週日執行時就是當天）
-        var row = rows
-            .Where(r => r.Date >= today && r.Date <= today.AddDays(6))
-            .OrderBy(r => r.Date)
-            .FirstOrDefault();
+        // 本週日（一週以週一開始、週日結束；當天是週日就取當天）
+        var sunday = today.AddDays((7 - (int)today.DayOfWeek) % 7);
+        var row = rows.FirstOrDefault(r => r.Date == sunday);
 
         if (row is null)
         {
-            logger.LogWarning("服事表中找不到 {From:yyyy/MM/dd} ~ {To:yyyy/MM/dd} 的資料，本次不發送", today, today.AddDays(6));
+            logger.LogWarning("服事表中找不到本週日 {Sunday:yyyy/MM/dd} 的資料，本次不發送", sunday);
             return;
         }
 
