@@ -1,0 +1,33 @@
+{
+  
+  "permissions": {
+    "defaultMode": "default",
+    "disableBypassPermissionsMode": "disable",
+    "deny": [
+      "Read(**/local.settings.json)",
+      "Read(**/appsettings.Development.json)",
+      "Read(**/appsettings.json)",
+      "Read(**/secrets.json)",
+      "Read(~/.microsoft/usersecrets/**)",
+      "Read(**/config/credentials.json)",
+      "Read(**/.env*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Bash(rm -rf *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(git push *)",
+      "Bash(chmod 777 *)"
+    ],
+    "ask": [
+      "Bash(dotnet ef *)",
+      "Bash(dotnet watch *)"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "allowUnsandboxedCommands": false
+  }
+}
